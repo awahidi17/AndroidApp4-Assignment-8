@@ -1,0 +1,10 @@
+<resources>
+    <color name="primary">#6750A4</color>
+    <color name="primary_dark">#4F378B</color>
+    <color name="purple_light">#EADDFF</color>
+    <color name="background">#FFF7FF</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="ink">#1D1B20</color>
+    <color name="secondary_text">#625B71</color>
+    <color name="outline">#CAC4D0</color>
+</resources>
