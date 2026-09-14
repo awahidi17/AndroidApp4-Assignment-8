@@ -1,25 +1,30 @@
 # AndroidApp4 – SuperPodcast
 
-**MWD3B Android Development – Assignment 7**  
+**MWD3B Android Development – Assignment 8**
+
 **Created by Ahmad Wahidi**
 
-SuperPodcast is a Kotlin Android application based on the networking concepts from the PodPlay tutorial. It searches the public iTunes podcast directory, applies unusual search criteria, loads podcast episodes from RSS feeds, saves subscriptions, and streams episode audio.
+SuperPodcast is the completed and polished version of the podcast application started in Assignment 7. It applies the networking, persistence, media, background-work, and interface concepts from the PodPlay tutorial while adding unusual podcast filters.
 
-## Assignment 7 features
+## Completed features
 
 - Search podcasts through the iTunes Search API using Retrofit and Kotlin coroutines.
 - Show network results in a RecyclerView with podcast artwork, author, genre, and episode count.
 - Apply unusual criteria: regular-expression title matching, titles with five or more words, or fewest episodes first.
 - Open a podcast details screen and download its RSS feed using OkHttp.
 - Parse RSS/XML into playable episode models with `XmlPullParser`.
-- Play, pause, and resume remote episode audio using Android `MediaPlayer`.
+- Stream remote episode audio using Android `MediaPlayer`.
+- Play, pause, resume, stop, and seek through an episode.
+- Display the current playback time and total duration.
+- Change playback speed while listening: 0.75×, 1.0×, 1.25×, 1.5×, or 2.0×.
 - Subscribe or unsubscribe from the results, details, and subscriptions screens.
 - Preserve subscriptions locally with SharedPreferences and Gson.
 - Show loading, empty, invalid-filter, feed, playback, and network error states.
 - Preserve asynchronous screen state with ViewModel, StateFlow, and coroutines.
-- Unit-test the advanced filtering rules.
-
-The attached reference project also contains Assignment 8 features such as background checks, notifications, playback seeking, and speed controls. Those are intentionally left for the next assignment, as the Assignment 7 instructions say the app does not have to be fully polished or complete yet.
+- Use WorkManager to check subscribed RSS feeds every 12 hours when a network is available.
+- Create a notification channel and notify the user when a newer episode is detected.
+- Request Android 13+ notification permission without blocking the main application.
+- Unit-test the advanced filtering rules and background update comparison.
 
 ## Project structure
 
@@ -36,8 +41,11 @@ ca.ahmadwahidi.superpodcast
 │   ├── PodcastDetailsFragment.kt / PodcastDetailsViewModel.kt
 │   ├── PodcastAdapter.kt
 │   └── EpisodeAdapter.kt
-└── util
-    └── PodcastFilter.kt
+├── util
+│   └── PodcastFilter.kt
+└── worker
+    ├── PodcastUpdateScheduler.kt
+    └── PodcastUpdateWorker.kt
 ```
 
 ## Run in Android Studio
@@ -49,6 +57,7 @@ ca.ahmadwahidi.superpodcast
 5. Start an Android 7.0 (API 24) or newer emulator with internet access.
 6. Select **Run > Run 'app'**.
 7. Search for a topic such as `technology`, `business`, or `science`.
+8. On Android 13 or newer, allow notifications when prompted if you want new-episode alerts.
 
 No API key is required. Search results come from Apple's public iTunes Search API, and episodes come from each publisher's RSS feed.
 
@@ -60,18 +69,18 @@ No API key is required. Search results come from Apple's public iTunes Search AP
 4. Subscribe to one result.
 5. Open the podcast and wait for its RSS episodes to load.
 6. Play an episode, pause it, and resume it.
-7. Open **Subscriptions** and confirm the saved show appears.
+7. Move the seek bar, change the speed, and stop playback.
+8. Open **Subscriptions** and confirm the saved show appears after restarting the app.
 
 ## GitHub submission
 
-Create an empty GitHub repository named `AndroidApp4`, then run from the project folder:
+From the project folder, run:
 
 ```bash
-git init
 git add .
-git commit -m "Complete Assignment 7 - Ahmad Wahidi"
+git commit -m "Complete Assignment 8 - Ahmad Wahidi"
 git branch -M main
-git remote add origin https://github.com/awahidi17/AndroidApp4.git
+git remote set-url origin https://github.com/awahidi17/AndroidApp4.git
 git push -u origin main
 ```
 
@@ -83,12 +92,15 @@ Submit this repository link to the instructor:
 
 | Rubric criterion | Evidence in this project |
 | --- | --- |
-| Features | API search, JSON conversion, RSS networking/parsing, lists, details, playback, subscriptions, unusual filters, and state/error handling |
-| Functionality | Full search-to-playback flow, persistent subscriptions, lifecycle-aware state, and filter unit tests |
-| Commenting | Each architectural class and non-obvious network, RSS, persistence, filtering, and playback block is explained in English |
+| Features | Search, JSON mapping, RSS parsing, subscriptions, complete playback controls, background feed checks, notifications, filters, and polished states |
+| Functionality | Full search-to-playback flow, persistent data, lifecycle-aware state, network-constrained WorkManager task, and filter unit tests |
+| Commenting | Architectural classes and non-obvious networking, RSS, persistence, filtering, playback, and worker logic are explained in English |
+| AI Reflection | `AIReflection.md` answers all three required questions with specific examples, verification steps, changes, learning, and challenges |
 
 ## Notes
 
 - A few publishers block or remove old RSS feeds; SuperPodcast displays an error instead of crashing.
 - Podcast search requires an internet connection.
 - Cleartext traffic is enabled because some public podcast feeds still redirect through HTTP URLs.
+- Android controls the exact time of periodic WorkManager execution to protect battery life.
+- The first successful background feed check records a baseline; notifications begin only when a later episode is detected.

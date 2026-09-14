@@ -57,6 +57,14 @@ class PodcastRepository(context: Context) {
         return nowSubscribed
     }
 
+    /** Stores the most recent known enclosure URL for background update comparisons. */
+    fun latestKnownEpisode(podcastId: Long): String? =
+        preferences.getString("latest_episode_$podcastId", null)
+
+    fun rememberLatestEpisode(podcastId: Long, audioUrl: String) {
+        preferences.edit().putString("latest_episode_$podcastId", audioUrl).apply()
+    }
+
     private fun parseRss(stream: java.io.InputStream): List<Episode> {
         val parser = XmlPullParserFactory.newInstance().newPullParser().apply {
             setInput(stream, null)
