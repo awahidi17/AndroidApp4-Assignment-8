@@ -2,8 +2,6 @@
 
 **MWD3B Android Development – Assignment 8**
 
-**Created by Ahmad Wahidi**
-
 SuperPodcast is the completed and polished version of the podcast application started in Assignment 7. It applies the networking, persistence, media, background-work, and interface concepts from the PodPlay tutorial while adding unusual podcast filters.
 
 ## Completed features
@@ -72,32 +70,7 @@ No API key is required. Search results come from Apple's public iTunes Search AP
 7. Move the seek bar, change the speed, and stop playback.
 8. Open **Subscriptions** and confirm the saved show appears after restarting the app.
 
-## GitHub submission
 
-From the project folder, run:
-
-```bash
-git add .
-git commit -m "Complete Assignment 8 - Ahmad Wahidi"
-git branch -M main
-git remote set-url origin https://github.com/awahidi17/AndroidApp4.git
-git push -u origin main
-```
-
-Submit this repository link to the instructor:
-
-`https://github.com/awahidi17/AndroidApp4.git`
-
-## Rubric mapping
-
-| Rubric criterion | Evidence in this project |
-| --- | --- |
-| Features | Search, JSON mapping, RSS parsing, subscriptions, complete playback controls, background feed checks, notifications, filters, and polished states |
-| Functionality | Full search-to-playback flow, persistent data, lifecycle-aware state, network-constrained WorkManager task, and filter unit tests |
-| Commenting | Architectural classes and non-obvious networking, RSS, persistence, filtering, playback, and worker logic are explained in English |
-| AI Reflection | `AIReflection.md` answers all three required questions with specific examples, verification steps, changes, learning, and challenges |
-
-## Notes
 
 - A few publishers block or remove old RSS feeds; SuperPodcast displays an error instead of crashing.
 - Podcast search requires an internet connection.
